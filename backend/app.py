@@ -2,13 +2,20 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from collections import deque
+from flask import send_from_directory
+import os
 
 app = Flask(__name__)
+app.static_folder = '../dist'
 CORS(app)
 
 students = []
 deleted_stack = []
 request_queue = deque()
+
+@app.route("/")
+def serve():
+    return send_from_directory(app.static_folder, "index.html")
 
 @app.route("/")
 def home():
